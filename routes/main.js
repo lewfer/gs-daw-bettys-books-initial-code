@@ -1,15 +1,15 @@
 // Create a new router
-const express = require("express");
-const router = express.Router();
+const express = require("express")
+const router = express.Router()
 
 // Handle our routes
-router.get('/',function(req,res){
+router.get('/',function(req, res, next){
     res.render('index.ejs')
-});
+})
 
-router.get('/about',function(req,res){
-    res.render('about.ejs');
-});
+router.get('/about',function(req, res, next){
+    res.render('about.ejs')
+})
 
 // Export the router object so index.js can access it
-module.exports = router;
+module.exports = router
