@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+    <title>Add Movie to <%= shopData.shopName %></title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <script>
+        function validateForm(event) {
+            let isValid = true;
+            const title = document.getElementById('title');
+            const rating = document.getElementById('rating');
+            const release_date = document.getElementById('release_date');
+            const description = document.getElementById('description');
+            const user = document.getElementById('user');
+            const genres = document.getElementById('genres');
+            const tags = document.getElementById('tags');
+            const keywords = document.getElementById('keywords');
+
+            // Clear previous error messages
+            document.querySelectorAll('.error').forEach(e => e.innerText = '');
+
+            // Validate Movie Title
+            if (title.value.trim() === '') {
+                document.getElementById('title-error').innerText = 'Movie title is required';
+                isValid = false;
+            } else if (title.value.length > 100) {
+                document.getElementById('title-error').innerText = 'Movie title must be less than 100 characters';
+                isValid = false;
+            }
+
+            // Validate Rating
+            const ratingPattern = /^\d+(\.\d{1,2})?$/;
+            if (rating.value.trim() === '') {
+                document.getElementById('rating-error').innerText = 'Rating is required';
+                isValid = false;
+            } else if (!ratingPattern.test(rating.value)) {
+                document.getElementById('rating-error').innerText = 'Rating must be a valid number with up to two decimal places';
+                isValid = false;
+            }
+
+            // Validate Release Date
+            if (release_date.value.trim() === '') {
+                document.getElementById('release_date-error').innerText = 'Release date is required';
+                isValid = false;
+            }
+
+            // Validate Description
+            if (description.value.trim() === '') {
+                document.getElementById('description-error').innerText = 'Description is required';
+                isValid = false;
+            }
+
+            // Validate Genres (Optional)
+            if (genres.value && /[^a-zA-Z,\s]/.test(genres.value)) {
+                document.getElementById('genres-error').innerText = 'Genres can only contain letters, commas, and spaces';
+                isValid = false;
+            }
+
+            // Validate Tags (Optional)
+            if (tags.value && /[^a-zA-Z,\s]/.test(tags.value)) {
+                document.getElementById('tags-error').innerText = 'Tags can only contain letters, commas, and spaces';
+                isValid = false;
+            }
+
+            // Validate Keywords (Optional)
+            if (keywords.value && /[^a-zA-Z,\s]/.test(keywords.value)) {
+                document.getElementById('keywords-error').innerText = 'Keywords can only contain letters, commas, and spaces';
+                isValid = false;
+            }
+
+            // Validate User
+            if (user.value.trim() === '') {
+                document.getElementById('user-error').innerText = 'Your name is required';
+                isValid = false;
+            }
+
+            // Prevent form submission if not valid
+            if (!isValid) {
+                event.preventDefault();
+            }
+        }
+
+        // Attach validateForm to form submission
+        window.onload = function() {
+            document.getElementById('add-movie-form').addEventListener('submit', validateForm);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Add Movie to <%= shopData.shopName %></h1>
+            <a href="/" class="home-link">Home</a>
+        </header>
+        <!-- Display any validation errors -->
+        <% if (errors.length > 0) { %>
+            <ul style="color: red;">
+                <% errors.forEach(function(error) { %>
+                    <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+        <% } %>
+        <form id="add-movie-form" method="POST" action="/movies/movieadded" class="add-movie-form">
+            <!-- User Name Field -->
+            <p>
+                <label for="user">Your Name:</label>
+                <input id="user" type="text" name="user" value="<%= previousData.user || userName %>" readonly />
+            </p>
+            <p class="error" id="user-error"></p>
+
+            <!-- Movie Title Field -->
+            <p>
+                <label for="title">Movie Title:</label>
+                <input id="title" type="text" name="title" value="<%= previousData.title || '' %>" />
+            </p>
+            <p class="error" id="title-error"></p>
+
+            <!-- Rating Field -->
+            <p>
+                <label for="rating">Rating:</label>
+                <input id="rating" type="text" name="rating" value="<%= previousData.rating || '' %>" />
+            </p>
+            <p class="error" id="rating-error"></p>
+
+            <!-- Release Date Field -->
+            <p>
+                <label for="release_date">Release Date:</label>
+                <input id="release_date" type="date" name="release_date" value="<%= previousData.release_date || '' %>" />
+            </p>
+            <p class="error" id="release_date-error"></p>
+
+            <!-- Description Field -->
+            <p>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" style="width: calc(100% - 120px);"><%= previousData.description || '' %></textarea>
+            </p>
+            <p class="error" id="description-error"></p>
+
+          
+            <p>
+                <label for="genres">Genres:</label>
+                <input id="genres" type="text" name="genres" placeholder="e.g., Action, Adventure" value="<%= previousData.genres || '' %>" />
+            </p>
+            <p class="error" id="genres-error"></p>
+
+           
+            <p>
+                <label for="tags">Tags:</label>
+                <input id="tags" type="text" name="tags" placeholder="e.g., Epic, Heroic" value="<%= previousData.tags || '' %>" />
+            </p>
+            <p class="error" id="tags-error"></p>
+
+      
+            <p>
+                <label for="keywords">Keywords:</label>
+                <input id="keywords" type="text" name="keywords" placeholder="e.g., Magic, Adventure" value="<%= previousData.keywords || '' %>" />
+            </p>
+            <p class="error" id="keywords-error"></p>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Add Movie" />
+        </form>
+
+        <!-- Link to go back to Home -->
+        <p class="back-link">Want to go back? <a href="/">Home</a></p>
+    </div>
+</body>
+</html>

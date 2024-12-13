@@ -1,16 +1,88 @@
 <!doctype html>
-<html>
-  <head>
-    <title>Welcome to <%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
-  </head>
-  <body>
-    <h1><%=shopData.shopName%> Shop</h1>
-    <h2>Here are the books that we sell:</h2>
-    <ul>
-      <% availableBooks.forEach(function(book) { %>
-        <li><%= book.name %>, £<%=book.price%> </li>
-      <% }) %>
-    </ul>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= shopData.shopName %> - Movie Shop</title>
+    <link rel="stylesheet" type="text/css" href="/main2.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><%= shopData.shopName %> Shop</h1>
+            <h2>Here are the movies that we offer:</h2>
+            <p><strong>Welcome <%= firstName %>,</strong></p>
+            <a href="/" class="home-link">Home</a>
+        </header>
+
+        <div class="movies-container">
+            <% availableMovies.forEach(movie => { %>
+            <div class="movie-box" id="movie-<%= movie.id %>">
+                <h3 class="movie-title"><%= movie.title %></h3>
+                <div class="movie-details">
+                    <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+                    <p><strong>Description:</strong> <%= movie.description %></p>
+                    <p><strong>Genres:</strong> <%= movie.genres %></p>
+                    <p><strong>Rating:</strong> <%= movie.rating || 'No Rating Yet' %></p>
+                </div>
+
+                <!-- Favorite/Unfavorite Button -->
+                <div class="favorite-box">
+                    <% if (userId && firstName) { %>
+                        <form method="POST" action="/movies/<%= movie.isFavorited ? 'unfavorite' : 'favorite' %>">
+                            <input type="hidden" name="movieId" value="<%= movie.id %>">
+                            <button type="submit">
+                                <%= movie.isFavorited ? 'Unfavorite' : 'Favorite' %>
+                            </button>
+                        </form>
+                    <% } else { %>
+                        <p class="error-msg">You must <a href="/users/login">log in</a> to favorite this movie.</p>
+                    <% } %>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="review-section">
+                    <h4>Reviews:</h4>
+                    <% if (movie.reviews && movie.reviews.length > 0) { %>
+                        <% movie.reviews.forEach(review => { %>
+                            <div class="review-item">
+                                <strong><%= review.userName %>:</strong>
+                                <p><%= review.comment %></p>
+                                <span class="rating">Rating: <%= review.rating %></span>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No reviews yet.</p>
+                    <% } %>
+                </div>
+
+                <!-- Leave a Review -->
+                <div class="review-box">
+                    <% if (userId && firstName) { %>
+                        <form method="POST" action="/movies/review">
+                            <input type="hidden" name="movieId" value="<%= movie.id %>" />
+                            <input type="hidden" name="userId" value="<%= userId %>" />
+                            <input type="hidden" name="username" value="<%= firstName %>" />
+
+                            <label for="rating">Rating:</label>
+                            <input type="number" name="rating" step="0.1" min="0" max="10" required><br />
+
+                            <label for="comment">Comment:</label><br />
+                            <textarea name="comment" rows="4" cols="40" required></textarea><br />
+                            <button type="submit">Submit Review</button>
+                        </form>
+                    <% } else { %>
+                        <p class="error-msg">Please <a href="/users/login">log in</a> to leave a review.</p>
+                    <% } %>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+
+        <footer>
+            <p>Thank you for visiting <%= shopData.shopName %>!</p>
+            <p>Want to go back? <a href="/">Home</a></p>
+        </footer>
+    </div>
+</body>
 </html>

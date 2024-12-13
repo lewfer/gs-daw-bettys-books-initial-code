@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <title>Recommendations for <%= username %> - <%= shopData.shopName %></title>
+    <link rel="stylesheet" type="text/css" href="/main2.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="info-box">
+                <h1>Recommendations for <%= username %></h1>
+                <a href="/" class="home-link">Home</a>
+                <h2>Top 2 favorite genres: <%= favoriteGenres %></h2>
+            </div>
+        </header>
+        
+        <h2>Our Recommendations:</h2>
+        <div class="movies-container">
+            <% if (dbRecommendations.length > 0) { %>
+                <% dbRecommendations.forEach(function(movie) { %>
+                    <div class="movie-box">
+                        <h3 class="movie-title"><%= movie.title %></h3>
+                        <div class="movie-details">
+                            <p><strong>Description:</strong> <%= movie.description || 'No description available.' %></p>
+                            <p><strong>Genres:</strong> <%= movie.genres %></p>
+                            <p><strong>Tags:</strong> <%= movie.tags %></p>
+                            <p><strong>Keywords:</strong> <%= movie.keywords %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No recommendations found from our database.</p>
+            <% } %>
+        </div>
+
+        <br><br>
+        <h1>API Recommendations:</h1>
+        <div class="movies-container">
+            <% if (apiRecommendations.length > 0) { %>
+                <% apiRecommendations.forEach(function(resultSnippet) { %>
+                    <div class="movie-box">
+                        <p><strong>Query:</strong> <%= resultSnippet.query %></p>
+                        <p><strong>Response:</strong> <%= resultSnippet.response %></p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No recommendations found from the API.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

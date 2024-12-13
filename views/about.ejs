@@ -1,11 +1,39 @@
 <!doctype html>
 <html>
   <head>
-    <title>About <%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
+    <title>About <%= shopData.shopName %><a href="/" class="home-link">Home</a></title>
+    
+    <link rel="stylesheet" type="text/css" href="/main.css" />
   </head>
   <body>
-    <h1>About <%=shopData.shopName%></h1>
-    <p>We sell all sorts of books and nothing else!</p>
+    <div class="container">
+      <header>
+        <h1>About <%= shopData.shopName %></h1>
+        <a href="/" class="home-link">Home</a>
+      </header>
+      
+      <section class="about-section">
+        <p>Welcome to <%= shopData.shopName %>, your ultimate destination for movie enthusiasts! Our platform is designed to provide a comprehensive movie review experience, allowing users to explore, add, and review movies. Whether you're a casual viewer or a dedicated cinephile, we have something for everyone.</p>
+        
+        <h2>Our Mission</h2>
+        <p>Our mission is to create a space where movie lovers can share their opinions, discover new films, and connect with like-minded individuals. We aim to provide accurate information, engaging reviews, and personalized recommendations based on users' favorite genres.</p>
+        
+        <h2>Features</h2>
+        <ul>
+          <li>Search and explore a vast database of movies</li>
+          <li>Add and review movies with detailed information</li>
+          <li>Favorite movies and receive personalized recommendations</li>
+          <li>Stay updated with the latest movie releases</li>
+          <li>Access user-friendly APIs for movie data</li>
+        </ul>
+        
+        <h2>Contact Us</h2>
+        <p>If you have any questions or feedback, feel free to reach out to us at support@<%= shopData.shopName.toLowerCase() %>.com. We're here to help!</p>
+      </section>
+      
+      <footer>
+        <p>&copy; 2023 <%= shopData.shopName %>. All rights reserved.</p>
+      </footer>
+    </div>
   </body>
 </html>

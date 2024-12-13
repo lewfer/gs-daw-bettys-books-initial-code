@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <title>API Provision</title>
+    <a href="/" class="home-link">Home</a>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+    <h1>API Provision</h1>
+    <ul>
+        <% if (users && users.length > 0) { %>
+            <% users.forEach(user => { %>
+                <li>
+                    <a href="https://doc.gold.ac.uk/usr/416/api/recommendations/<%= user.id %>">
+                        User <%= user.id %> - <%= user.username %>
+                    </a>
+                </li>
+            <% }) %>
+        <% } else { %>
+            <li>No users found.</li>
+        <% } %>
+    </ul>
+</body>
+</html>

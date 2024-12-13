@@ -1,16 +1,104 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Register for <%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
-  </head>
-  <body>
-    <h1>Register for <%=shopData.shopName%></h1>
-    <form method="POST" action="registered">
-        <p>First name: <input id="first" type="text" name="first" /></p>
-        <p>Last name: <input id="last" type="text" name="last"/></p>
-        <p>Email: <input id="email" type="text" name="email"/></p>
-        <input type="submit" value="Register" />
-      </form>
-  </body>
+<head>
+    <title>Register for <%= shopData.shopName %></title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <script>
+        function validateForm(event) {
+            let isValid = true;
+            const first = document.getElementById('first');
+            const last = document.getElementById('last');
+            const email = document.getElementById('email');
+            const username = document.getElementById('username');
+            const password = document.getElementById('password');
+
+            // Clear previous error messages
+            document.querySelectorAll('.error').forEach(e => e.innerText = '');
+
+            // Validate First Name
+            if (first.value.trim() === '') {
+                document.getElementById('first-error').innerText = 'First name is required';
+                isValid = false;
+            }
+
+            // Validate Last Name
+            if (last.value.trim() === '') {
+                document.getElementById('last-error').innerText = 'Last name is required';
+                isValid = false;
+            }
+
+            // Validate Email
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value)) {
+                document.getElementById('email-error').innerText = 'Invalid email address';
+                isValid = false;
+            }
+
+            // Validate Username
+            if (username.value.trim() === '') {
+                document.getElementById('username-error').innerText = 'Username is required';
+                isValid = false;
+            }
+
+            // Validate Password
+            if (password.value.length < 8) {
+                document.getElementById('password-error').innerText = 'Password must be at least 8 characters long';
+                isValid = false;
+            }
+
+            // Prevent form submission if not valid
+            if (!isValid) {
+                event.preventDefault();
+            }
+        }
+
+        // Attach validateForm to form submission
+        window.onload = function() {
+            document.getElementById('registration-form').addEventListener('submit', validateForm);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Register for <%= shopData.shopName %></h1>
+            <a href="/" class="home-link">Home</a>
+        </header>
+        <form id="registration-form" method="POST" action="registered" class="register-form">
+            <p>
+                <label for="first">First name:</label>
+                <input id="first" type="text" name="first" value="<%= previousData.first || '' %>"/>
+            </p>
+            <p class="error" id="first-error"></p>
+
+            <p>
+                <label for="last">Last name:</label>
+                <input id="last" type="text" name="last" value="<%= previousData.last || '' %>"/>
+            </p>
+            <p class="error" id="last-error"></p>
+
+            <p>
+                <label for="email">Email:</label>
+                <input id="email" type="text" name="email" value="<%= previousData.email || '' %>"/>
+            </p>
+            <p class="error" id="email-error"></p>
+
+            <p>
+                <label for="username">Username:</label>
+                <input id="username" type="text" name="username" value="<%= previousData.username || '' %>"/>
+            </p>
+            <p class="error" id="username-error"></p>
+
+            <p>
+                <label for="password">Password:</label>
+                <input id="password" type="password" name="password"/>
+            </p>
+            <p class="error" id="password-error"></p>
+
+            <input type="submit" value="Register" />
+        </form>
+
+        <p>Already registered? <a href="/users/login">Login here</a></p>
+    </div>
+</body>
 </html>

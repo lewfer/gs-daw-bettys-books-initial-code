@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <title>Search Results - <%= shopData.shopName %></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Search Results - <%= shopData.shopName %></h1>
+      <a href="/" class="home-link">Home</a>
+
+    </header>
+    <% if (movies && movies.length > 0) { %>
+      <ul>
+        <% movies.forEach(function(movie) { %>
+          <li>
+            <strong><%= movie.title %></strong><br />
+            Description: <%= movie.description %><br />
+            Release Date: <%= movie.release_date %><br />
+            Genres: <%= movie.genres %><br />
+            <strong>Overall Rating: <%= movie.rating || 'No Rating Yet' %></strong>
+          </li>
+          <hr />
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p class="no-results">No movies match your search criteria. Please try again!</p>
+    <% } %>
+    <p><a href="/movies/search">Back to Search</a></p>
+  </div>
+</body>
+</html>

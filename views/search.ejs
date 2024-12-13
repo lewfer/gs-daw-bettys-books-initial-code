@@ -1,15 +1,39 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Search <%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
-  </head>
-  <body>
-    <h1>Search <%=shopData.shopName%></h1>
-    <form action="search_result" method="GET">
-      <p>What book do you want?</p>
-      <input id="search_box" type="text" name="search_text">
-      <input type="submit" value="Search" >
+<head>
+  <title>Search <%= shopData.shopName %></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Search <%= shopData.shopName %></h1>
+      <a href="/" class="home-link">Home</a>
+
+    </header>
+    <form action="/movies/search_result" method="GET">
+      <p>Search by title:</p>
+      <input type="text" name="title" placeholder="Movie Title">
+      <p>Search by rating:</p>
+      <input type="number" name="minRating" placeholder="Minimum Rating" step="0.1" min="0" max="10">
+      <input type="number" name="maxRating" placeholder="Maximum Rating" step="0.1" min="0" max="10">
+      <p>Search by review content:</p>
+      <input type="text" name="reviewContent" placeholder="Review Content">
+      <p>Search by description content:</p>
+      <input type="text" name="descriptionContent" placeholder="Description Content">
+      <p>Search by release year:</p>
+      <input type="number" name="releaseYear" placeholder="Release Year" min="1900" max="2100">
+      <p>Search by genres (comma separated):</p>
+      <input type="text" name="genres" placeholder="Genres">
+      <p>Sort by:</p>
+      <select name="sortBy">
+        <option value="mostReviews">Most Reviews</option>
+        <option value="highestRating">Highest Rating</option>
+        <option value="newestRelease">Newest Release</option>
+      </select>
+      <br><br>
+      <input type="submit" value="Search">
     </form>
-  </body>
+  </div>
+</body>
 </html>

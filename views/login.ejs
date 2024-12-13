@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>Login to <%= shopData.shopName %></title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Login to <%= shopData.shopName %></h1>
+            <a href="/" class="home-link">Home</a>
+        </header>
+        <form method="POST" action="loggedin" class="login-form">
+            <p>
+                <label for="username">Username:</label>
+                <input id="username" type="text" name="username" />
+            </p>
+            <p>
+                <label for="password">Password:</label>
+                <input id="password" type="password" name="password" />
+            </p>
+            <input type="submit" value="Login" />
+        </form>
+
+        <!-- : A link to registration if they are not registered -->
+        <p>Don't have an account? <a href="/users/register">Register here</a></p>
+
+        <!-- Forgot Password link -->
+        <p><a href="/users/resetpassword">Forgot your password? Click here</a></p>
+    </div>
+</body>
+</html>

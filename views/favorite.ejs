@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Favorite Movies - <%= shopData.shopName %></title>
+    <link rel="stylesheet" type="text/css" href="/main2.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Your Favorite Movies</h1>
+            <a href="/" class="home-link">Home</a>
+        </header>
+        <div class="movies-container">
+            <% if (favoriteMovies.length > 0) { %>
+                <% favoriteMovies.forEach((movie) => { %>
+                    <div class="movie-box">
+                        <h3 class="movie-title"><%= movie.title %></h3>
+                        <div class="movie-details">
+                            <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+                            <p><strong>Tags:</strong> <%= movie.tags %></p>
+                            <p><strong>Keywords:</strong> <%= movie.keywords %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>You have no favorite movies.</p>
+            <% } %>
+        </div>
+
+        <footer>
+            <p>Want to go back? <a href="/movies/list">Movies List</a></p>
+        </footer>
+    </div>
+</body>
+</html>

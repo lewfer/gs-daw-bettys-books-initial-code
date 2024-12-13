@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <title>User Preferences</title>
+    <link rel="stylesheet" type="text/css" href="/main2.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>User Preferences</h1>
+            <a href="/" class="home-link">Home</a>
+        </header>
+
+        <% if (message) { %>
+            <div class="message"><%= message %></div>
+        <% } %>
+
+        <p>Welcome, <strong><%= username %></strong>!</p>
+        <p>You have <%= favorite_count %> favorite movies.</p>
+
+        <% if (preferences.length > 0) { %>
+            <div class="movies-container">
+                <% preferences.forEach(function(movie) { %>
+                    <div class="movie-box">
+                        <h3 class="movie-title"><%= movie.favorite_titles ? movie.favorite_titles.trim() : 'Title not available' %></h3>
+                        <div class="movie-details">
+                            <p><strong>Description:</strong> <%= movie.favorite_descriptions ? movie.favorite_descriptions : 'Description not available' %></p>
+                            <p><strong>Genres:</strong> <%= movie.favorite_genres ? movie.favorite_genres.replace(/,/g, ', ') : 'Genres not available' %></p>
+                            <p><strong>Tags:</strong> <%= movie.favorite_tags ? movie.favorite_tags.replace(/,/g, ', ') : 'Tags not available' %></p>
+                            <p><strong>Release Year:</strong> <%= movie.favorite_years ? movie.favorite_years : 'Year not available' %></p>
+                            <p><strong>Keywords:</strong> <%= movie.favorite_keywords ? movie.favorite_keywords.replace(/,/g, ', ') : 'Keywords not available' %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>No favorite movies found.</p>
+        <% } %>
+
+        <% if (favorite_count >= 4) { %>
+            <button class="recommendation-btn" onclick="window.location.href='/usr/416/movies/recommendations';">Get Recommendations</button>
+        <% } else { %>
+            <button class="recommendation-btn" disabled>Get Recommendations</button>
+        <% } %>
+    </div>
+</body>
+</html>
